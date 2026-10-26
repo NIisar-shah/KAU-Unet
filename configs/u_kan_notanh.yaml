@@ -1,0 +1,44 @@
+# U-KAN with tanh-support correction OFF.
+# Tanh-generality experiment: u_kan_tanh vs u_kan_notanh, full data, 3 seeds.
+# use_tanh threads into every KANLinear via UKAN -> TokKANBlock (edited u_kan.py).
+experiment:
+  name: u_kan_notanh
+  save_dir: ./runs/u_kan_notanh
+  seed: 42
+
+task: multiclass
+num_classes: 4
+class_names: [background, LV_endocardium, LV_myocardium, left_atrium]
+foreground_classes: [1, 2, 3]
+
+data:
+  root: ./datasets/CAMUS_NIFTI
+  file_ext: .nii.gz
+  split_seed: 42
+  image_size: 256
+  target_label: 1
+  val_ratio: 0.15
+  test_ratio: 0.15
+  views: ["2CH", "4CH"]
+
+model:
+  name: u_kan
+  params:
+    in_channels: 3
+    kan_grid_size: 5
+    kan_spline_order: 3
+    use_tanh: false
+
+train:
+  batch_size: 8
+  num_workers: 0
+  num_epochs: 100
+  optimizer:
+    name: adamw
+    lr: 1.0e-4
+    weight_decay: 1.0e-4
+  scheduler:
+    name: cosine
+    T_max: 100
+    eta_min: 1.0e-6
+  augment: true

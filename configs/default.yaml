@@ -1,0 +1,52 @@
+# Default config -- fully supervised KAN-UNet on CAMUS (multi-class).
+# For a binary-LV ablation: set task: binary and num_classes is ignored.
+
+experiment:
+  name: baseline_unet_seed42
+  save_dir: ./runs/baseline_unet_seed42
+  seed: 42
+
+# --- task --------------------------------------------------------------------
+# `task`: 'binary' uses a single-channel sigmoid head + BCE; the model's
+# out_channels is automatically set to 1, and the dataset returns binary
+# masks where foreground == target_label.
+# `task`: 'multiclass' uses a `num_classes`-channel softmax head + CE; the
+# dataset returns the full CAMUS label map {0..num_classes-1}.
+task: multiclass
+num_classes: 4
+class_names: [background, LV_endocardium, LV_myocardium, left_atrium]
+foreground_classes: [1, 2, 3]   # classes that contribute to mean Dice/IoU/HD95
+
+data:
+  root: ./datasets/CAMUS_NIFTI    # <-- your CAMUS NIfTI root
+  file_ext: .nii.gz                       # .nii.gz (CAMUS default) or .mhd
+  split_seed: 42                          # fixed across all seeds -- decides patient train/val/test
+  image_size: 256
+  target_label: 1                         # 1 = LV endocardium (only used when task=binary)
+  val_ratio: 0.15
+  test_ratio: 0.15
+  views: ["2CH", "4CH"]
+
+model:
+  name: baseline_unet                          # one of: baseline_unet, kan_unet
+  params:
+    in_channels: 3
+    # out_channels is set automatically from `task` / `num_classes`; do not edit
+    base_channels: 32
+    kan_num_layers: 2
+    kan_grid_size: 5
+    kan_spline_order: 3
+
+train:
+  batch_size: 8
+  num_workers: 0
+  num_epochs: 100
+  optimizer:
+    name: adamw
+    lr: 1.0e-4
+    weight_decay: 1.0e-4
+  scheduler:
+    name: cosine
+    T_max: 100
+    eta_min: 1.0e-6
+  augment: true

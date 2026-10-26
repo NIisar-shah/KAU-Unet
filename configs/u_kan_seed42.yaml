@@ -1,0 +1,46 @@
+experiment:
+  name: u_kan_seed42
+  save_dir: runs/u_kan_seed42
+  seed: 42
+task: multiclass
+num_classes: 4
+class_names:
+- background
+- LV_endocardium
+- LV_myocardium
+- left_atrium
+foreground_classes:
+- 1
+- 2
+- 3
+data:
+  root: ./datasets/CAMUS_NIFTI
+  file_ext: .nii.gz
+  split_seed: 42
+  image_size: 256
+  target_label: 1
+  val_ratio: 0.15
+  test_ratio: 0.15
+  views:
+  - 2CH
+  - 4CH
+model:
+  name: u_kan
+  params:
+    in_channels: 3
+    encoder_dims: [32, 64, 128, 160, 256]
+    kan_grid_size: 5
+    kan_spline_order: 3
+train:
+  batch_size: 8
+  num_workers: 0
+  num_epochs: 100
+  optimizer:
+    name: adamw
+    lr: 0.0001
+    weight_decay: 0.0001
+  scheduler:
+    name: cosine
+    T_max: 100
+    eta_min: 1.0e-06
+  augment: true

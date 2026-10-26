@@ -1,0 +1,48 @@
+# KAU-Net (KAN-UNet-Attn) final architecture, 4-class CAMUS
+experiment:
+  name: kau_net_seed42
+  save_dir: ./runs/kau_net_seed42
+  seed: 42
+task: multiclass
+num_classes: 4
+class_names:
+- background
+- LV_endocardium
+- LV_myocardium
+- left_atrium
+foreground_classes:
+- 1
+- 2
+- 3
+data:
+  root: ./datasets/CAMUS_NIFTI
+  file_ext: .nii.gz
+  split_seed: 42
+  image_size: 256
+  target_label: 1
+  val_ratio: 0.15
+  test_ratio: 0.15
+  views:
+  - 2CH
+  - 4CH
+model:
+  name: kan_unet_attn
+  params:
+    in_channels: 3
+    base_channels: 32
+    kan_num_layers: 2
+    kan_grid_size: 5
+    kan_spline_order: 3
+train:
+  batch_size: 8
+  num_workers: 0
+  num_epochs: 100
+  optimizer:
+    name: adamw
+    lr: 0.0001
+    weight_decay: 0.0001
+  scheduler:
+    name: cosine
+    T_max: 100
+    eta_min: 1.0e-06
+  augment: true
