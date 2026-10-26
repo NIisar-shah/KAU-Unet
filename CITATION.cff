@@ -10,3 +10,9 @@ authors:
     family-names: 'Hu'
   - given-names: 'Muhammad'
     family-names: 'Abbas'
+
+version: 1.0.0
+license: Apache-2.0
+repository-code: 'https://github.com/NIisar-shah/KAU-Unet'
+url: 'https://github.com/NIisar-shah/KAU-Unet'
+type: software
