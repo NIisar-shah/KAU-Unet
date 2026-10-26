@@ -141,7 +141,7 @@ def measure(model_name: str, cfg: dict, image_size: int, batch_size: int,
 def write_latex_table(results, batch_size: int, image_size: int, device,
                       out_path: Path,
                       baseline: str = "baseline_unet",
-                      proposed: str = "kan_unet") -> None:
+                      proposed: str = "kan_unet_attn") -> None:
     if baseline not in results or proposed not in results:
         print(f"  Skipping LaTeX -- need both {baseline} and {proposed} measurements.")
         return
@@ -155,7 +155,7 @@ def write_latex_table(results, batch_size: int, image_size: int, device,
 
     dev_str = "GPU" if device.type == "cuda" else "CPU"
     caption = (
-        r"Computational cost of the proposed KAN-UNet vs the baseline U-Net "
+        r"Computational cost of the proposed KAU-Net vs U-Net "
         f"on a single ${image_size}\\times{image_size}\\times 3$ input "
         f"(batch size {batch_size}). Latency reported as mean $\\pm$ std over "
         "100 forward passes after 10 warmup iterations on " + dev_str + ". "
@@ -182,7 +182,7 @@ def write_latex_table(results, batch_size: int, image_size: int, device,
         (f"Baseline U-Net  & {b['params']/1e6:.2f} "
          f"& {flops_b} "
          f"& {b['latency_mean_ms']:.2f} $\\pm$ {b['latency_std_ms']:.2f} \\\\"),
-        (f"KAN-UNet (ours) & {k['params']/1e6:.2f} ({p_pct:+.0f}\\%) "
+        (f"KAU-Net & {k['params']/1e6:.2f} ({p_pct:+.0f}\\%) "
          f"& {flops_k_cell} "
          f"& {k['latency_mean_ms']:.2f} $\\pm$ {k['latency_std_ms']:.2f} "
          f"({l_pct:+.0f}\\%) \\\\"),
@@ -246,11 +246,11 @@ def main(args):
               f"{mem_str}")
 
     # Relative overhead
-    if "baseline_unet" in results and "kan_unet" in results:
+    if "baseline_unet" in results and "kan_unet_attn" in results:
         b = results["baseline_unet"]
-        k = results["kan_unet"]
+        k = results["kan_unet_attn"]
         print()
-        print("Overhead (KAN vs Baseline):")
+        print("Overhead (KAU-Net vs U-Net):")
         print(f"  Params:  +{(k['params']-b['params'])/1e6:.3f} M  "
               f"({100*(k['params']-b['params'])/b['params']:+.1f} %)")
         if b["flops"] > 0:
@@ -269,7 +269,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--config", default="configs/default.yaml")
     p.add_argument("--models", nargs="+",
-                   default=["baseline_unet", "kan_unet"])
+                   default=["baseline_unet", "kan_unet", "kan_unet_attn"])
     p.add_argument("--batch_size", type=int, default=1,
                    help="Batch size for the latency measurement.")
     p.add_argument("--warmup", type=int, default=10)
