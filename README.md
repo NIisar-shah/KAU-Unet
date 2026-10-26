@@ -86,10 +86,54 @@ its `COMPARATORS` constant if you run only the five architectures above.
 
 ## Data and code availability
 
-The CAMUS dataset is not redistributed here. Public releases should include a
-stable citation and an independently verified run configuration. **License has
-not yet been selected** — see `PUBLICATION_CHECKLIST.md` before releasing.
+The **Cardiac Acquisitions for Multi-structure Ultrasound Segmentation (CAMUS)**
+dataset is provided by its original custodians and is **not redistributed**
+in this repository. Researchers should obtain it from the
+[official CAMUS dataset page](https://www.creatis.insa-lyon.fr/Challenge/camus/)
+and comply with its access and usage conditions. The training and evaluation
+scripts expect a local CAMUS installation with the image and mask labels
+described in [Reproducibility setup](#reproducibility-setup). Set `data.root`
+in the YAML configuration to the local dataset directory.
+
+This repository contains the KAU-Net source code and the associated
+training, inference, ablation, evaluation, and statistical-analysis
+scripts. In particular, `configs/kau_net.yaml` specifies the proposed
+four-class model and training configuration; `train.py` and `evaluate.py`
+provide the training and held-out evaluation entry points;
+`tools/run_seeds.py`, `tools/aggregate_seeds.py`, and
+`tools/Patient_clustered_stats.py` support the multi-seed and
+patient-clustered comparison procedures. Installation requirements,
+data organization, model smoke testing, and example commands are
+documented above.
+
+The source code is provided under the **Apache License, Version 2.0**
+(see [LICENSE](LICENSE)). The repository is **currently private** while
+the manuscript and release materials are being finalized; it is intended
+to be made publicly available at
+[github.com/NIisar-shah/KAU-Unet](https://github.com/NIisar-shah/KAU-Unet)
+when the authors authorize the release. The repository does not include
+CAMUS images, pretrained checkpoints, or original per-seed experiment
+outputs. Accordingly, reproducing the reported numerical results requires
+obtaining the dataset and rerunning the documented experiments; inclusion
+of executable code should not be interpreted as an independently
+verified reproduction of every result.
 
 ## Citation
 
-See `CITATION.cff`. Add the published article DOI once assigned.
+If you use, modify, or build upon KAU-Net in academic research, please
+acknowledge the software and cite the associated research article once its
+bibliographic details are available. Until an article DOI is assigned, the
+following is a **provisional software citation**, not a claim of journal
+publication:
+
+> Sherazi, S. N. Y., Hu, Y., and Abbas, M. (2026).
+> *KAN-UNet-Attn (KAU-Net): support-aware KAN bottleneck with gated skip
+> connections for multi-structure echocardiographic segmentation*
+> [Computer software]. GitHub.
+> https://github.com/NIisar-shah/KAU-Unet
+
+Machine-readable citation metadata is provided in
+[CITATION.cff](CITATION.cff). After the associated article is published,
+the authors will update the citation metadata and this section with the
+journal reference and DOI. Citing the paper does not replace compliance
+with the software license or any third-party licenses.
