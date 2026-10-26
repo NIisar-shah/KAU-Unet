@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: >-
+  If you use KAU-Net in your research, please cite the associated
+  manuscript once its bibliographic details are available.
+title: 'KAN-UNet-Attn (KAU-Net): support-aware KAN bottleneck with gated skip connections for multi-structure echocardiographic segmentation'
+authors:
+  - given-names: 'Syed Nisar Yousaf'
+    family-names: 'Sherazi'
+  - given-names: 'Yue'
+    family-names: 'Hu'
+  - given-names: 'Muhammad'
+    family-names: 'Abbas'
