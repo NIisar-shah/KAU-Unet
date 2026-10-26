@@ -1,0 +1,41 @@
+# Original CAMUS scans/segmentation masks and private datasets
+/datasets/
+/data/CAMUS*/
+*.nii
+*.nii.gz
+*.mhd
+*.raw
+*.nrrd
+*.dcm
+*.dicom
+# Model checkpoints & experimental run artifacts
+/runs/
+/outputs/
+/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.tfevents.*
+*.log
+*.out
+# Credentials and local environments
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+.venv/
+venv/
+# Cache, editors, notebooks
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+# Build exports
+*.zip
+/tmp/
