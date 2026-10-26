@@ -10,3 +10,4 @@ pandas>=1.5
 matplotlib>=3.7
 scikit-image>=0.20
 fvcore>=0.1.5
+pytest>=7.4
