@@ -1,4 +1,4 @@
-# Public-release checklist (complete before clicking Publish)
+# Public-release checklist
 
 - [ ] Select an open-source license **you are authorized to grant** and add `LICENSE`.
   If you leave the repository without a license, viewing is permitted under
