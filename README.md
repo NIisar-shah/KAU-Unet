@@ -162,17 +162,13 @@ Latency and FPS are hardware- and software-dependent. Report them only together
 with the GPU, CUDA, PyTorch, batch size, warmup count, and measurement count.
 FLOPs from `fvcore` are a lower bound for custom B-spline operations.
 
-## Numerical outputs and checkpoints
+## Numerical outputs
 
-The source repository does not redistribute CAMUS data. Before journal
-submission, the authors should attach or archive the numerical outputs
-underlying the manuscript tables and figures, including per-seed summaries,
-patient-clustered bootstrap results, ensemble summaries, and measured
-efficiency results. A recommended layout is documented in `results/README.md`.
-
-If trained checkpoints are promised in the manuscript, distribute them through
-a versioned GitHub Release or an archival repository such as Zenodo. Otherwise,
-the manuscript availability statement should not promise checkpoints.
+The source repository does not redistribute CAMUS data or trained checkpoints.
+Non-identifiable numerical outputs underlying the main manuscript tables,
+statistical analyses, ensemble evaluation, efficiency comparison, and selected
+figures are deposited under `results/`. Models can be retrained from the
+versioned configurations and commands above.
 
 ## Reproducibility notes
 
