@@ -197,5 +197,5 @@ Until the article DOI is available, use the provisional software citation:
 > [Computer software]. GitHub.
 > https://github.com/NIisar-shah/KAU-Unet
 
-Machine-readable citation metadata is provided in `CITATION.cff`. Update it
+Machine-readable citation metadata is provided in `CITATION.cff`. WILL Update it
 with the final paper citation and DOI when available.
