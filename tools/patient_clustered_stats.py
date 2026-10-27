@@ -3,7 +3,7 @@
 patient_clustered_stats.py
 ==========================
 
-Re-analyses the per-sample paired comparisons in Table 4 of the KAN-UNet-Attn
+Re-analyses the per-sample paired comparisons in Table 4 of the KAU-Net
 manuscript using statistical methods that respect the nested data structure
 flagged by reviewers:
 
@@ -56,7 +56,7 @@ OUT_TEX   = RUNS_DIR / "aggregate" / "wilcoxon_corrected.tex"
 # The proposed composite is the reference; everything is reported as
 # (reference - comparator).
 REFERENCE   = "kan_unet_attn"
-COMPARATORS = ["baseline_unet", "kan_unet", "kan_unet_mlp", "kan_unet_plus"]
+COMPARATORS = ["baseline_unet", "kan_unet_no_tanh", "kan_unet_mlp", "kan_unet"]
 
 SEEDS = [42, 0, 1, 2, 3]
 
@@ -71,10 +71,10 @@ FOREGROUND_CLASSES = [1, 2, 3]
 
 # Display strings for the LaTeX table
 COMP_LATEX = {
-    "baseline_unet": r"vs.\ Baseline",
-    "kan_unet":      r"vs.\ KAN-UNet",
-    "kan_unet_mlp":  r"vs.\ MLP",
-    "kan_unet_plus": r"vs.\ KAN-UNet$^{+}$",
+    "baseline_unet":     r"vs.\ U-Net",
+    "kan_unet_no_tanh":  r"vs.\ KAN-UNet (no tanh)",
+    "kan_unet_mlp":      r"vs.\ MLP-bottleneck U-Net",
+    "kan_unet":          r"vs.\ KAN-UNet",
 }
 
 
@@ -281,7 +281,7 @@ def main():
     print("=" * 100)
     for comp in COMPARATORS:
         sub = results[results["comparator"] == comp]
-        print(f"\n--- KAN-UNet-Attn vs {comp} ---")
+        print(f"\n--- KAU-Net vs {comp} ---")
         print(f"{'Class':<10} {'Metric':<6} {'Δ':>11} {'95% CI':>26} "
               f"{'p_raw':>9} {'p_BH':>9} {'sig':>6}")
         for _, r in sub.iterrows():
@@ -308,15 +308,15 @@ def main():
     lines.append(r"\begin{table}[!htbp]")
     lines.append(r"\centering")
     lines.append(
-        r"\caption{Per-sample paired comparisons against KAN-UNet-Attn under "
+        r"\caption{Patient-clustered paired comparisons for KAU-Net under "
         r"a patient-level cluster bootstrap (B$=5000$ resamples of the $N=75$ "
         r"test patients) with Benjamini--Hochberg FDR correction at $q=0.05$ "
         r"applied across all 32 cells. Cells show the mean per-record "
-        r"difference $\Delta=$ KAN-UNet-Attn $-$ reference. "
+        r"difference $\Delta=$ KAU-Net $-$ reference. "
         r"$^{\ast\ast}$ $q<0.01$; $^{\ast}$ $q<0.05$; "
         r"$^{(\circ)}$ unadjusted $p<0.05$ but does not survive FDR correction. "
         r"Negative $\Delta$ on Dice or positive $\Delta$ on HD95 indicate "
-        r"KAN-UNet-Attn underperforms the reference and are reported "
+        r"KAU-Net underperforms the reference and are reported "
         r"transparently.}"
     )
     lines.append(r"\label{tab:wilcoxon_corrected}")

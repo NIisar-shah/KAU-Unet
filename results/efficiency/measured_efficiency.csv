@@ -1,0 +1,5 @@
+model,parameters_m,flops_g,latency_mean_ms,latency_sd_ms,peak_memory_mb,fps_from_mean_latency
+U-Net,1.93,9.26,2.53,0.20,59.2,395.2569
+KAN-UNet,3.24,10.47,4.56,0.27,99.8,219.2982
+KAU-Net,3.27,10.78,4.83,0.32,102.4,207.0393
+

@@ -293,7 +293,7 @@ def write_latex_table(aggregate, pvalues, class_names, foreground_classes,
                       decimals=dice_decimals)
                  for c in cols]
     lines.append(r"Dice $\uparrow$       & Baseline U-Net  & " + " & ".join(base_dice) + r" \\")
-    lines.append(r"                      & KAN-UNet (ours) & " + " & ".join(prop_dice) + r" \\")
+    lines.append(r"                      & KAU-Net & " + " & ".join(prop_dice) + r" \\")
 
     lines.append(r"\midrule")
 
@@ -306,7 +306,7 @@ def write_latex_table(aggregate, pvalues, class_names, foreground_classes,
                       decimals=hd95_decimals)
                  for c in cols]
     lines.append(r"HD95 (px) $\downarrow$ & Baseline U-Net  & " + " & ".join(base_hd95) + r" \\")
-    lines.append(r"                       & KAN-UNet (ours) & " + " & ".join(prop_hd95) + r" \\")
+    lines.append(r"                       & KAU-Net & " + " & ".join(prop_hd95) + r" \\")
 
     lines.extend([
         r"\bottomrule",
@@ -417,7 +417,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--runs_root", default="./runs")
     p.add_argument("--baseline_model", default="baseline_unet")
-    p.add_argument("--proposed_model", default="kan_unet")
+    p.add_argument("--proposed_model", default="kan_unet_attn")
     p.add_argument("--classes", nargs="*", default=None,
                    help="Foreground class names (only used if used_config.yaml "
                         "lookup fails).")
